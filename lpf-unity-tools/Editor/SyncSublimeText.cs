@@ -66,7 +66,7 @@ public class SyncSublimeText : Editor
 		outFile += "\n";
 
 		// Add link to solution file
-		string[] slnFiles = Directory.GetFiles(Application.dataPath + "/../", "*.sln", SearchOption.TopDirectoryOnly);
+		string[] slnFiles = Directory.GetFiles(Application.dataPath + "/../", "*csharp.sln", SearchOption.TopDirectoryOnly);
 		if(slnFiles.Length > 0)
 			outFile += "\t\"solution_file\":" + "\"" + slnFiles[0] + "\"";
 
