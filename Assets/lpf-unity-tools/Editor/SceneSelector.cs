@@ -14,7 +14,7 @@ public class SceneSelector : EditorWindow
     static void Init()
     {
         SceneSelector window = (SceneSelector)EditorWindow.GetWindow(typeof(SceneSelector));
-        window.title = "Scene Selector";
+        window.titleContent = new GUIContent("Scene Selector");
 		window.Show();
     }
 	

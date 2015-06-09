@@ -9,7 +9,7 @@ public class SlowmotionEditor : EditorWindow
     static void Init()
     {
         SlowmotionEditor window = (SlowmotionEditor)EditorWindow.GetWindow(typeof(SlowmotionEditor));
-        window.title = "Slowmotion";
+        window.titleContent = new GUIContent("Slowmotion");
 		window.Show();
 		window.minSize = new Vector2 (10, 30);
     }
