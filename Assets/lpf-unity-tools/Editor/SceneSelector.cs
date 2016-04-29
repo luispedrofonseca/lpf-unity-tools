@@ -35,9 +35,9 @@ public class SceneSelector : EditorWindow
 			{
 				if (GUILayout.Button(scene.Name, GUILayout.Height(16)))
 				{
-					if (EditorApplication.SaveCurrentSceneIfUserWantsTo())
+					if (UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
 					{
-						EditorApplication.OpenScene(scene.Path);
+                        UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scene.Path);
 						EditorGUIUtility.ExitGUI();
 					}
 				}
