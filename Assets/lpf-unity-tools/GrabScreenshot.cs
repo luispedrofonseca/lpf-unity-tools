@@ -23,7 +23,7 @@ public static class GrabScreenshot
         //Wait for graphics to render
         yield return new WaitForEndOfFrame();
 
-        RenderTexture rt = new RenderTexture(textureWidth, textureHeight, 24);        
+        RenderTexture rt = RenderTexture.GetTemporary(textureWidth, textureHeight);
         Texture2D screenShot = new Texture2D(textureWidth, textureHeight, textureFormat, false);
 
         targetCamera.targetTexture = rt;
@@ -42,7 +42,7 @@ public static class GrabScreenshot
         yield return null;
 
         // Destroy
-        GameObject.Destroy(rt);
+        RenderTexture.ReleaseTemporary(rt);
         GameObject.Destroy(screenShot);
     }
 }
