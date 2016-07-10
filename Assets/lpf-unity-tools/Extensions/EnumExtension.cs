@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-public static class EnumsHelperExtension
+public static class EnumExtension
 {
 	public static string ToDescription(this Enum value)
 	{
