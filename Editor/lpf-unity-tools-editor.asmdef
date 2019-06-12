@@ -1,6 +1,8 @@
 {
     "name": "lpf-unity-tools-editor",
-    "references": [],
+    "references": [
+        "GUID:db61fd7dbf8354507bfbe29faccc28e7"
+    ],
     "includePlatforms": [
         "Editor"
     ],
