@@ -5,16 +5,8 @@ using System.Reflection;
 
 namespace TheEditorToolboxProject
 {
-    //
-    // Written by Peter Schraut
-    //     http://www.console-dev.de
-    //
-    // Save this file as
-    //     Assets/Editor/TransformEditor.cs
-    //
-    // Download most recent version from:
-    //     https://bitbucket.org/snippets/pschraut/
-    //
+    // Slightly modified version of the script by:
+    // Peter Schraut - http://www.console-dev.de
 
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Transform))]
@@ -27,45 +19,38 @@ namespace TheEditorToolboxProject
 
         void OnEnable()
         {
-            if (serializedObject == null)
-                return;
-
             m_LocalPosition = serializedObject.FindProperty("m_LocalPosition");
             m_LocalRotation = serializedObject.FindProperty("m_LocalRotation");
             m_LocalScale = serializedObject.FindProperty("m_LocalScale");
 
             if (m_TransformRotationGUI == null)
                 m_TransformRotationGUI = System.Activator.CreateInstance(typeof(SerializedProperty).Assembly.GetType("UnityEditor.TransformRotationGUI", false, false));
-            m_TransformRotationGUI.GetType().GetMethod("OnEnable").Invoke(m_TransformRotationGUI, new object[] { m_LocalRotation, new GUIContent("Rotation") });
+            m_TransformRotationGUI.GetType().GetMethod("OnEnable").Invoke(m_TransformRotationGUI, new object[] { m_LocalRotation, GUIContent.none });
         }
 
         public override void OnInspectorGUI()
         {
-            var serObj = this.serializedObject;
-            if (serObj == null)
-                return;
-
-            serObj.Update();
+            serializedObject.Update();
 
             DrawLocalPosition();
             DrawLocalRotation();
             DrawLocalScale();
 
-            DrawPropertiesExcluding(serObj, new string[] { "m_LocalPosition", "m_LocalRotation", "m_LocalScale" });
+            DrawPropertiesExcluding(serializedObject, new string[] { "m_LocalPosition", "m_LocalRotation", "m_LocalScale" });
 
             Verify();
 
-            serObj.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedProperties();
         }
 
         void DrawLocalPosition()
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.PropertyField(m_LocalPosition, new GUIContent("Position"));
-
-                if (GUILayout.Button(new GUIContent("0", "Reset Position"), EditorStyles.miniButton, GUILayout.Width(20)))
+                if (GUILayout.Button(new GUIContent("P", "Reset Position"),GUILayout.Width(20)))
                     m_LocalPosition.vector3Value = Vector3.zero;
+
+                EditorGUILayout.PropertyField(m_LocalPosition, GUIContent.none);
             }
         }
 
@@ -73,10 +58,10 @@ namespace TheEditorToolboxProject
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                m_TransformRotationGUI.GetType().GetMethod("RotationField", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(bool) }, null).Invoke(m_TransformRotationGUI, new object[] { false });
-
-                if (GUILayout.Button(new GUIContent("0", "Reset Rotation"), EditorStyles.miniButton, GUILayout.Width(20)))
+                if (GUILayout.Button(new GUIContent("R", "Reset Rotation"),GUILayout.Width(20)))
                     m_LocalRotation.quaternionValue = Quaternion.identity;
+
+                m_TransformRotationGUI.GetType().GetMethod("RotationField", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(bool) }, null).Invoke(m_TransformRotationGUI, new object[] { false });
             }
         }
 
@@ -84,10 +69,10 @@ namespace TheEditorToolboxProject
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.PropertyField(m_LocalScale, new GUIContent("Scale"));
-
-                if (GUILayout.Button(new GUIContent("1", "Reset Scale"), EditorStyles.miniButton, GUILayout.Width(20)))
+                if (GUILayout.Button(new GUIContent("S", "Reset Scale"), GUILayout.Width(20)))
                     m_LocalScale.vector3Value = Vector3.one;
+
+                EditorGUILayout.PropertyField(m_LocalScale, GUIContent.none);
             }
         }
 
