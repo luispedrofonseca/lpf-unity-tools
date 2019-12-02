@@ -38,6 +38,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public static class SimplePool
 {
@@ -148,7 +149,12 @@ public static class SimplePool
     private static void Init(GameObject prefab = null, int qty = DEFAULT_POOL_SIZE)
     {
         if (_pools == null)
+        {
             _pools = new Dictionary<int, Pool>();
+            
+            SceneManager.activeSceneChanged -= ChangedActiveScene;
+            SceneManager.activeSceneChanged += ChangedActiveScene;
+        }
 
         if (prefab != null)
         {
@@ -159,6 +165,12 @@ public static class SimplePool
                 _pools[prefabID] = new Pool(prefab, qty);
         }
     }
+    
+    // Automatically clear the pool when the root scene changes
+    private static void ChangedActiveScene(Scene current, Scene next)
+    {
+        Reset();
+    }
 
     /// <summary>
     /// If you want to preload a few copies of an object at the start
@@ -168,7 +180,7 @@ public static class SimplePool
     /// Spawn/Despawn sequence is going to be pretty darn quick and
     /// this avoids code duplication.
     /// </summary>
-    static public void Preload(GameObject prefab, int qty = 1)
+    static public GameObject[] Preload(GameObject prefab, int qty = 1)
     {
         Init(prefab, qty);
         // Make an array to grab the objects we're about to pre-spawn.
@@ -179,6 +191,8 @@ public static class SimplePool
         // Now despawn them all.
         for (int i = 0; i < qty; i++)
             Despawn(obs[i]);
+
+        return obs;
     }
 
     /// <summary>
@@ -200,6 +214,9 @@ public static class SimplePool
     /// </summary>
     static public void Despawn(GameObject obj)
     {
+        if(!obj.activeSelf)
+            return;
+        
         Pool p = null;
         foreach (var pool in _pools.Values)
         {
@@ -219,6 +236,11 @@ public static class SimplePool
         {
             p.Despawn(obj);
         }
+    }
+
+    static public void Reset()
+    {
+        _pools = new Dictionary<int, Pool>(); 
     }
 }
 
