@@ -1,9 +1,9 @@
 {
   "name": "com.luispedrofonseca.lpf-unity-tools",
   "displayName": "LPF Unity Tools",
-	"description": "A bunch of helper tools",
-	"version": "1.0.0",
-	"unity": "2018.3",
+	"description": "Various helper tools collected over the years. Some are mine, some are from other people. I will try to have a link to the original source when possible.",
+	"version": "1.0.1",
+	"unity": "2022.3",
 	"license": "MIT",
 	"repository": {
 		"type": "git",

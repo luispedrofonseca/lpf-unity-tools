@@ -88,8 +88,8 @@
      private void GatherHiddenObjects()
      {
          HiddenObjects.Clear();
- 
-         var allObjects = FindObjectsOfType<GameObject>();
+
+         var allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
          foreach (var go in allObjects)
          {
              if ((go.hideFlags & HideFlags.HideInHierarchy) != 0)

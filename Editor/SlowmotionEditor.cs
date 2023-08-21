@@ -40,5 +40,38 @@ public class SlowmotionEditor : EditorWindow
 		}
 
 		EditorGUILayout.EndHorizontal();
+		
+		EditorGUILayout.BeginHorizontal();
+
+		EditorGUI.BeginChangeCheck();
+		if (GUILayout.Button("0.001f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 0.001f;
+		}
+		if (GUILayout.Button("0.01f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 0.01f;
+		}
+		if (GUILayout.Button("0.03f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 0.03f;
+		}
+		if (GUILayout.Button("0.1f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 0.1f;
+		}
+		if (GUILayout.Button("0.5f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 0.5f;
+		}
+		if (GUILayout.Button("1f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 1f;
+		}
+		if (GUILayout.Button("2f", GUILayout.Height(20)))
+		{
+			Time.timeScale = 2f;
+		}
+		EditorGUILayout.EndHorizontal();
 	}
 }
