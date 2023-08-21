@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class SlowmotionEditor : EditorWindow
 {
+	private float _previousTimeScale = 1;
+	
 	[MenuItem("Window/Slowmotion Editor")]
 	private static void Init()
     {
 	    var window = GetWindow<SlowmotionEditor>();
 		window.Show();
-		window.minSize = new Vector2 (10, 30);
+		window.minSize = new Vector2 (10, 50);
     }
 
     private void OnGUI()
@@ -28,13 +30,14 @@ public class SlowmotionEditor : EditorWindow
 		{
 			if (GUILayout.Button("Resume", GUILayout.Height(20), GUILayout.Width(64)))
 			{
-				Time.timeScale = 1.0f;
+				Time.timeScale = _previousTimeScale;
 			}
 		}
 		else
 		{
 			if (GUILayout.Button("Pause", GUILayout.Height(20), GUILayout.Width(64)))
 			{
+				_previousTimeScale = Time.timeScale;
 				Time.timeScale = 0.0f;
 			}
 		}
